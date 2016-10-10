@@ -5,6 +5,14 @@ import PIL, sys, textwrap
 from PIL import Image, ImageFilter, ImageFont, ImageDraw
 
 #definitions
+location = "meme.png"
+f = []
+rootDir='.'
+for dirName, subdirList, fileList in os.walk(rootDir):
+   print("found directory: %s" % dirName)
+   for fname in fileList:
+       print("\t%s" % fname)
+
 location = "pic.png"
 originalImage = Image
 red = 0
