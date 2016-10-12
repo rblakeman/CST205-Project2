@@ -2,6 +2,7 @@
 # Project2.py
 # github.com/rblakeman/CST205-Project2
 import PIL, sys, textwrap
+import os
 from PIL import Image, ImageFilter, ImageFont, ImageDraw
 
 #definitions
