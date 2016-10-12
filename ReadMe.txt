@@ -1,5 +1,6 @@
 How To Run:
-	
+	The Text has a max of 3 lines for each top and bottom
+	New picture will be saved as "meme.png" in the folder
 
 GitHub repository: https://github.com/rblakeman/CST205-Project2/tree/merged
 
