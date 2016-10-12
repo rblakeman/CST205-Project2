@@ -1,4 +1,8 @@
 How To Run:
+	can be ran through the command line or through the gui.
+	program prints out all avalible pictures in a directory
+	then asks for a picture to be selected from the directory
+	last it asks for text to be put in for bot sections
 	The Text has a max of 3 lines for each top and bottom
 	New picture will be saved as "meme.png" in the folder
 
