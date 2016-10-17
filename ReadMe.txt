@@ -1,5 +1,6 @@
 How To Run:
 	can be ran through the command line or through the gui.
+	(Gui currently does not work)
 	program prints out all available pictures in a directory
 	then asks for a picture to be selected from the directory
 	last it asks for text to be put in for bot sections
