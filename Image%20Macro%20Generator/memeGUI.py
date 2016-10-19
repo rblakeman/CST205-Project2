@@ -1,6 +1,8 @@
 import proj2class
 import PIL, tkinter, sys
-from PIL import Image, ImageTk, ImageFilter, ImageFont, ImageDraw
+import re
+from PIL import ImageTk, ImageFilter, ImageFont, ImageDraw
+import PIL.Image
 from tkinter import ttk
 from tkinter import *
 from tkinter.ttk import *
@@ -19,7 +21,7 @@ class myMemeGUI:
     selectFrame = ttk.Frame
     fileList = ttk.Label
     selectImg = tkinter.Text
-    gotoEditor = ttk.Button
+    exitSelect = ttk.Button
 
     #Editor Widgets
     editorFrame = ttk.Frame
@@ -48,7 +50,7 @@ class myMemeGUI:
         self.selectFrame = ttk.Frame(self.mainframe, height=10, width=10, padding="1 1 1 1")
         self.fileList = ttk.Label(self.selectFrame, text="Enter Text")
         self.selectImg = tkinter.Text(self.selectFrame, height=2, width=20)
-        self.gotoEditor = ttk.Button(self.selectFrame, text="Load Image", command=self.gotoEditor)
+        self.exitSelect = ttk.Button(self.selectFrame, text="Load Image", command=lambda : self.gotoEditor())
 
         self.editorFrame = ttk.Frame(self.mainframe, padding="1 1 1 1")
         self.imgFrame = ttk.Frame(self.editorFrame, borderwidth=5, relief="raised", padding="1 1 2 2")
@@ -66,10 +68,6 @@ class myMemeGUI:
                                                                           self.input2Entry.get(i1, i2)))
         self.publishBtn = ttk.Button(self.editorFrame, text="Publish", command=lambda: self.publish())
 
-        return
-
-    def selectPic(self, str):
-        self.pro2.pickImage(str)
         return
 
     #Retrieves the Photo being edited by proj2 and creates a TK image to be displayed
@@ -100,8 +98,13 @@ class myMemeGUI:
         return
 
     def gotoEditor(self):
-        outcome = self.selectPic(self.selectImg.get("1.0", END))
+        picstr = self.selectImg.get("1.0", END)
+        picstr = re.sub('[\n\t\r ]', '', picstr)
+        self.pro2.pickImage(picstr)
+        outcome = self.pro2.loadImage()
+        print("find: "+picstr+" "+str(outcome))
         if(not outcome):
+            print("No Pic")
             return
 
         self.removeSelectGUI()
@@ -115,10 +118,10 @@ class myMemeGUI:
         self.selectFrame.grid(columnspan=10, rowspan=5)
         self.fileList.grid(column=4, row=1, columnspan=5, rowspan=5)
         self.selectImg.grid(column=1, row=1)
-        self.gotoEditor.grid(column=1, row=4, columnspan=2,sticky=(N, W, E))
+        self.exitSelect.grid(column=1, row=2, columnspan=2,sticky=(N, W, E))
 
         self.input1Entry.focus()
-        self.root.bind('<Return>', self.gotoEditor)
+        self.root.bind('<Return>', lambda x: self.gotoEditor())
         self.root.mainloop()
         return
 
@@ -127,7 +130,7 @@ class myMemeGUI:
         self.selectFrame.grid_forget()
         self.fileList.grid_forget()
         self.selectImg.grid_forget()
-        self.gotoEditor.grid_forget()
+        self.exitSelect.grid_forget()
         return
 
     # show Editor frame
@@ -136,7 +139,6 @@ class myMemeGUI:
         #text input1 variable
         input1Text = StringVar()
 
-        self.pro2.loadImage()
         self.photo = self.getPic()
         self.imgLbl.configure(image=self.photo)
 

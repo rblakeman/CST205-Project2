@@ -2,14 +2,15 @@
 # Project2.py
 # github.com/rblakeman/CST205-Project2
 import PIL, sys, os, textwrap
-from PIL import Image, ImageFilter, ImageFont, ImageDraw
+import PIL.Image
+from PIL import ImageFilter, ImageFont, ImageDraw
 from os import walk
 
 class proj2:
     #definitions
     location = "pic.png"
     originalImage = PIL.Image
-    newImage = Image
+    newImage = PIL.Image
     red = 0
     green = 0
     blue = 0
@@ -26,7 +27,6 @@ class proj2:
     pictureHeight = 0
 
     def __init__(self):
-        print(self.location)
         return
 
     def listImages(self):
@@ -46,39 +46,41 @@ class proj2:
 
     def pickImage(self, imgStr):
         self.location = imgStr
-        print(self.location)
+        print("Image Selected: "+self.location)
         return
 
     def loadImage(self):
         # open original image
-        print(self.location)
+        print("Loading: "+self.location)
         try:
-            self.originalImage = Image.open(self.location)
+            self.originalImage = PIL.Image.open(str(self.location))
+            #self.originalImage = PIL.Image.open("pic2.jpg")
         except:
             print("Failed to load")
             return False
 
         #create new image to copy the original into too
-        proj2.newImage = PIL.Image.new("RGB", proj2.originalImage.size, (0,0,0))
-        newImagedata = proj2.newImage.load()
-        proj2.pictureWidth = proj2.originalImage.size[0]
-        proj2.pictureHeight = proj2.originalImage.size[1]
-        rgb_og = proj2.originalImage.convert('RGB') # conversion error check
-        for x in range(0,proj2.pictureWidth):
-            for y in range(0, proj2.pictureHeight):
+        self.newImage = PIL.Image.new("RGB", self.originalImage.size, (0,0,0))
+        newImagedata = self.newImage.load()
+        self.pictureWidth = self.originalImage.size[0]
+        self.pictureHeight = self.originalImage.size[1]
+        rgb_og = self.originalImage.convert('RGB') # conversion error check
+        for x in range(0,self.pictureWidth):
+            for y in range(0, self.pictureHeight):
                 red, green, blue = rgb_og.getpixel((x,y))
                 newImagedata[x,y] = (red, green, blue)
         return True
 
     def mysetText(self):
-        proj2.text = str(input('Enter meme text: '))
+        self.text = str(input('Enter meme text: '))
 
     def setText(self, str1, str2):
         self.text1 = str1
         self.text2 = str2
 
     def getImg(self):
-        return proj2.newImage
+
+        return self.newImage
 
     def drawText(self):
         self.drawTextTop()
@@ -231,7 +233,7 @@ class proj2:
     #save it
     def saveNewImage(self):
         try:
-          proj2.newImage.save("meme.png")
+          self.newImage.save("meme.png")
         except:
             print("Failed to save")
 
