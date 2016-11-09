@@ -5,20 +5,23 @@ import PIL, sys, textwrap, os
 from PIL import Image, ImageFilter, ImageFont, ImageDraw
 import cv2
 
-##webcam takes a picture
-camera_port = 0
-ramp_frames = 30
-camera = cv2.VideoCapture(camera_port)
+choices = input("do you want to use a selfie for your meme?").lower()
+if choices == "yes":
+    ##webcam takes a picture
+    camera_port = 0
+    ramp_frames = 30
+    camera = cv2.VideoCapture(camera_port)
 
-def get_image():
- retval, im = camera.read()
- return im
- 
-print("Taking image...")
-camera_capture = get_image()
-file = "test.jpg"
-cv2.imwrite(file, camera_capture)
-del(camera)
+    def get_image():
+     retval, im = camera.read()
+     return im
+     
+    print("Taking image...")
+    camera_capture = get_image()
+    file = "selfie.jpg"
+    cv2.imwrite(file, camera_capture)
+    del(camera)
+    print("pick selfie for image to use")
 
 # prints all pictures in folder
 f = []
