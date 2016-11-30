@@ -68,7 +68,24 @@ for x in range(0,pictureWidth):
 font = ImageFont.truetype("arial.ttf", 25)
 draw = ImageDraw.Draw(newImage)
 ###################################################################################################
-text = str(input('Enter top text: '))
+choices = input("if you took a selfie do you want to use emotion recognition? yes or no \n").lower()
+if choices == "yes":
+    enIm = imEn.Brightness(im)
+    enhanced = enIm.enhance(1.5)
+    im_array = np.array(enhanced)
+    crop_loc = ind.facial_localization(im_array)
+    topX = crop_loc[0]['top_left_corner'][0]
+    topY = crop_loc[0]['top_left_corner'][1]
+    bottomX = crop_loc[0]['bottom_right_corner'][0]
+    bottomY = crop_loc[0]['bottom_right_corner'][1]
+    cropped_im = enhanced.crop((topX,topY,bottomX,bottomY))
+    cropped_array = np.array(cropped_im)
+    emoDict = ind.fer(data)
+    sortedDict = sorted(emoDict.items(), key = operator.itemgetter(1))
+    
+if choices == "no":
+    text = str(input('Enter top text: '))
+    
 lineCount = 1
 textWidth, textHeight = font.getsize(text) # gets the width and height of the text macro font
 if textWidth > pictureWidth:
