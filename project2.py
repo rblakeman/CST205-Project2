@@ -1,11 +1,20 @@
 # CST 205
 # Project2.py
 # github.com/rblakeman/CST205-Project2
-import PIL, sys, textwrap, os
+import PIL, sys, textwrap, os, random
+from random import randrange
+from PIL import ImageEnhance as imEn
+from PIL import Image as im
+import sys
+import indicoio as ind
+import operator
+import numpy
 from PIL import Image, ImageFilter, ImageFont, ImageDraw
 import cv2
 
-choices = input("do you want to use a selfie for your meme?").lower()
+##ind.config.api_key = "18f4dba9b853159e163402e9ddba8abc"
+
+choices = input("do you want to use a selfie for your meme? \n").lower()
 if choices == "yes":
     ##webcam takes a picture
     camera_port = 0
@@ -23,7 +32,15 @@ if choices == "yes":
     del(camera)
     print("pick selfie for image to use")
 
-# prints all pictures in folder
+    ##does not work do not become cat
+coices = input("Become cat?").lower()
+if choices == "yes":
+    s_img = cv2.imread("cat.jpg")
+    l_img = cv2.imread("selfie.jpg")
+    x_offset=y_offset=50
+    l_img[y_offset:y_offset+s_img.shape[0], x_offset:x_offset+s_img.shape[1]] = s_img
+    
+    # prints all pictures in folder
 f = []
 rootDir='.'
 for dirName, subdirList, fileList in os.walk(rootDir):
@@ -48,6 +65,7 @@ temp2 = "list2"
 
 location = str(input('Enter picture name: '))
 #open original image
+
 try:
     originalImage = Image.open(location)
 except:
@@ -65,23 +83,21 @@ for x in range(0,pictureWidth):
         newImagedata[x,y] = (red, green, blue)
 
 #meme it
+##choices = input("choose font: Arial, Comic Sans MS, or  Corbel \n").lower()
+##if choices == "Arial":
+    ##font = ImageFont.truetype("arial.ttf", 25)
+##if choices == "Comic Sans":
+   ## font = ImageFont.truetype("ComicSansMSRegular.ttf", 25)
+##if choices == "Corbel":
+   ## font = ImageFont.truetype("CorbelRegular.ttf", 25)
+    
 font = ImageFont.truetype("arial.ttf", 25)
 draw = ImageDraw.Draw(newImage)
 ###################################################################################################
-choices = input("if you took a selfie do you want to use emotion recognition? yes or no \n").lower()
+choices = input("do you want random text for your meme? yes or no \n").lower()
 if choices == "yes":
-    enIm = imEn.Brightness(im)
-    enhanced = enIm.enhance(1.5)
-    im_array = np.array(enhanced)
-    crop_loc = ind.facial_localization(im_array)
-    topX = crop_loc[0]['top_left_corner'][0]
-    topY = crop_loc[0]['top_left_corner'][1]
-    bottomX = crop_loc[0]['bottom_right_corner'][0]
-    bottomY = crop_loc[0]['bottom_right_corner'][1]
-    cropped_im = enhanced.crop((topX,topY,bottomX,bottomY))
-    cropped_array = np.array(cropped_im)
-    emoDict = ind.fer(data)
-    sortedDict = sorted(emoDict.items(), key = operator.itemgetter(1))
+    topText=["nerf this", "dank memes can't melt steel beams", "  ","wehn the mom makes teh spegetti" ,"speed weed","its high noon"]
+    text = random.choice(topText)
     
 if choices == "no":
     text = str(input('Enter top text: '))
@@ -152,7 +168,13 @@ for j in range(0,lineCount):
     draw.text((center - length, height), text, (255,255,255), font=font)
 
 ###################################################################################################
-text2 = str(input('Enter bottom text: '))
+choices = input("do you want random text for your meme? yes or no \n").lower()
+if choices == "yes":
+    bottomText=["nerf this", "dank memes can't melt steel beams","B O D E","speed weed","its high noon"]
+    text2 = random.choice(bottomText)
+    
+if choices == "no":
+    text2 = str(input('Enter bottom text: '))
 lineCount = 1
 textWidth, textHeight = font.getsize(text2) # gets the width and height of the text2 macro font
 if textWidth > pictureWidth:
@@ -223,4 +245,3 @@ for h in range(lineCount, 0, -1):
 #save it
 newImage.save("meme.png")
 print ("Congratulations! Your new meme is saved as 'meme.png' in the folder.")
-
