@@ -1,5 +1,6 @@
 How To Run:
 	can be ran through the command line or through the gui.
+	CommandVersion.py works completely besides cat feature.
 	(Gui currently does not work)
 	program prints out all available pictures in a directory
 	then asks for a picture to be selected from the directory
@@ -16,6 +17,5 @@ Whats New:
 
 GitHub repository: https://github.com/rblakeman/CST205-Project2/tree/merged
 
-Future work: in the future we want to make this program runnable on android using a wrapper
-and then releasing it on google play store. reworking the gui to remove bugs within the system
-and adding functionality based on being on a phone. possibly adding twitter functionality.
+Future work: Reworking the gui to remove bugs within the system
+and adding functionality based on being on a phone. fix cat function
