@@ -6,6 +6,13 @@ How To Run:
 	last it asks for text to be put in for bot sections
 	The Text has a max of 3 lines for each top and bottom
 	New picture will be saved as "meme.png" in the folder
+	
+Whats New:
+	Ported to android as an app and is currently being tested.
+	created a new feature that detects a face and replaces it with a cat
+	(cat feature not working)
+	can randomly put in text on top and bottom line.
+	selfie feature using the webcam.
 
 GitHub repository: https://github.com/rblakeman/CST205-Project2/tree/merged
 
